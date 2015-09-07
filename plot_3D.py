@@ -98,13 +98,13 @@ def changeData( nSnap ):
   data_h = preparePlotData( data_h )
   data_d = gpuarray.to_gpu( data_h )
   #For 1D cut
-  dens_x = dens[0, nDepth, :]
+  dens_x = dens[0, 0, :]
   vel_x  = vel[0, 0, :]/dens_x
   ax1.clear(), ax2.clear()
   ax1.plot( box_x, dens_x )
   ax2.plot( box_x, vel_x )
-  ax1.set_ylim( 0, 1 )
-  ax2.set_ylim( -2.5, 2.5 )
+  ax1.set_ylim( 0, 1.5 )
+  ax2.set_ylim( 0, 10 )
   plt.draw()
   changeSnapshot = False
 
@@ -129,8 +129,8 @@ ax1.clear(), ax2.clear()
 
 ax1.plot( box_x, dens_x )
 ax2.plot( box_x, vel_x )
-ax1.set_ylim( 0, 1 )
-ax2.set_ylim( -0.2, 0.2 )
+ax1.set_ylim( 0, 1.5 )
+ax2.set_ylim( 0, 10 )
 ax1.set_xlim(box_x.min(), box_x.max())
 plt.draw()
   

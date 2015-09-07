@@ -11,7 +11,7 @@ outFileName = outDir * "hydro3D_01.h5"
 println( "\nOut file: $outFileName" )
 outFile = h5open( outFileName, "w")
 
-nPoints = 50
+nPoints = 100
 
 const nx = nPoints
 const ny = nPoints
@@ -55,13 +55,13 @@ for k in 2:nz+1
     for i in 2:nx+1
       x = xMin + (i-2)*dx
       if ( sqrt( (x)^2 + (y)^2 + (z)^2 ) <= 0.5 )
-        rho = 0.9
+        rho = 1
         v_x = 0
         v_y = 0
         v_z = 0
         p = 10
       else
-        rho = 0.5
+        rho = 0.6
         v_x = 0
         v_y = 0
         v_z = 0
@@ -78,18 +78,18 @@ for k in 2:nz+1
   end
 end
 
-function setBounderies( vals )
-  #Open boundaries
-  #X boundery
-  vals[:, 1,   :, :] = vals[:, 2,     :, :]
-  vals[:, end, :, :] = vals[:, end-1, :, :]
-  #Y boundery
-  vals[:, :, 1,   :] = vals[:, :, 2,     :]
-  vals[:, :, end, :] = vals[:, :, end-1, :]
-  #Z boundery
-  vals[:, :, :,   1] = vals[:, :, :,     2]
-  vals[:, :, :, end] = vals[:, :, :, end-1]
-end
+# function setBounderies( vals )
+#   #Open boundaries
+#   #X boundery
+#   vals[:, 1,   :, :] = vals[:, 2,     :, :]
+#   vals[:, end, :, :] = vals[:, end-1, :, :]
+#   #Y boundery
+#   vals[:, :, 1,   :] = vals[:, :, 2,     :]
+#   vals[:, :, end, :] = vals[:, :, end-1, :]
+#   #Z boundery
+#   vals[:, :, :,   1] = vals[:, :, :,     2]
+#   vals[:, :, :, end] = vals[:, :, :, end-1]
+# end
 
 function setBounderies( vals )
   #Open boundaries
@@ -103,19 +103,19 @@ function setBounderies( vals )
   vals[:, end, :, :] = vals[:, end-1, :, :]
   #Y boundery
 #   vals[:, :, 1,   :] = vals[:, :, 2,     :] #For open boundery
-  vals[1, 1,   :, :] = vals[1, 2,     :, :]
-  vals[2, 1,   :, :] = vals[2, 2,     :, :]
-  vals[3, 1,   :, :] = -vals[3, 2,     :, :]
-  vals[4, 1,   :, :] = vals[4, 2,     :, :]
-  vals[5, 1,   :, :] = vals[5, 2,     :, :]
+  vals[1, :, 1,   :] = vals[1, :, 2,     :]
+  vals[2, :, 1,   :] = vals[2, :, 2,     :]
+  vals[3, :, 1,   :] = -vals[3, :, 2,     :]
+  vals[4, :, 1,   :] = vals[4, :, 2,     :]
+  vals[5, :, 1,   :] = vals[5, :, 2,     :]
   vals[:, :, end, :] = vals[:, :, end-1, :]
   #Z boundery
 #   vals[:, :, :,   1] = vals[:, :, :,     2] #For open boundery
-  vals[1, 1,   :, :] = vals[1, 2,     :, :]
-  vals[2, 1,   :, :] = vals[2, 2,     :, :]
-  vals[3, 1,   :, :] = vals[3, 2,     :, :]
-  vals[4, 1,   :, :] = -vals[4, 2,     :, :]
-  vals[5, 1,   :, :] = vals[5, 2,     :, :]
+  vals[1, :, :,   1] = vals[1, :, :,     2]
+  vals[2, :, :,   1] = vals[2, :, :,     2]
+  vals[3, :, :,   1] = vals[3, :, :,     2]
+  vals[4, :, :,   1] = -vals[4, :, :,     2]
+  vals[5, :, :,   1] = vals[5, :, :,     2]
   vals[:, :, :, end] = vals[:, :, :, end-1]
 end
 
