@@ -14,7 +14,7 @@ nSnap = 0
 changeSnapshot = False
 
 dataDir = "/home/bruno/Desktop/data/hydro/"
-dataFileName = dataDir + "hydro3D_01.h5"
+dataFileName = dataDir + "finVol3D_01.h5"
 dataFile = h5.File( dataFileName, 'r' )
 
 box_x, box_y, box_z = dataFile['box']['x'][...], dataFile['box']['y'][...], dataFile['box']['z'][...] 
@@ -58,6 +58,7 @@ floatToUchar = ElementwiseKernel(arguments="float *input, unsigned char *output"
 ########################################################################
 def preparePlotData( inputData ):
   plotData = inputData.astype(np.float32)
+  plotData = np.abs( plotData )
   #plotData = np.log10( 100*plotData + 1 )
   plotData = plotData * 0.85
   return plotData
@@ -104,7 +105,7 @@ def changeData( nSnap ):
   ax1.plot( box_x, dens_x )
   ax2.plot( box_x, vel_x )
   ax1.set_ylim( 0, 1.5 )
-  ax2.set_ylim( 0, 10 )
+  ax2.set_ylim( -5, 5 )
   plt.draw()
   changeSnapshot = False
 
